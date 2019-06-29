@@ -1,4 +1,0 @@
-<view class="l-class water-flow-container"
-      style="column-count:{{columnCount}};column-gap:{{columnGap}}">
-  <slot/>
-</view>

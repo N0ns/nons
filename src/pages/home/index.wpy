@@ -1,13 +1,18 @@
 <template>
   <view class="container" @tap="test">
-    666
-    <view class="mask" @tap.stop="toLogin"></view>
+    <view class="forehead">
+      <Home></Home>
+    </view>
+    <view wx:if="{{0}}" class="mask" @tap.stop="toLogin"></view>
+    <van-toast id="van-toast" />
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
   import { connect } from 'wepy-redux'
+  import Home from '@/components/common/home'
+  import Tips from '@/utils/Tips'
   @connect({
 
   })
@@ -16,15 +21,12 @@
     config = {
       navigationBarTitleText: 'nons',
       "usingComponents": {
-        "l-input": "../../linui/input/index",
-        "l-image-picker":"../../linui/image-picker/index",
-        "l-message": "../../linui/message/index",
-        "l-dialog": "../../linui/dialog/index",
-        "l-water-flow":"../../linui/water-flow/index"
+        "van-notice-bar": "../../vant-ui/notice-bar/index",
+        "van-toast": "../../vant-ui/toast/index"
       }
     }
     components = {
-
+      Home,
     }
     methods={
       test(){
@@ -37,7 +39,7 @@
 
     async onLoad() {
       let l = await wepy.login();
-      console.log(l)
+      // Tips.loading()
     }
   }
 </script>
@@ -47,6 +49,9 @@
     height: 100%;
     position:absolute;
     opacity: 0;
+  }
+  .forehead{
+    width:100%;
   }
   .userinfo {
     display: flex;
