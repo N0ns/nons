@@ -1,0 +1,45 @@
+<template>
+  <van-tabs active="{{ active }}" bind:change="onChange">
+      <repeat for="{{tabs}}" item="item" index="index">
+          <van-tab title="{{item.label}}"></van-tab>
+      </repeat>
+    
+  </van-tabs>
+</template>
+<script>
+import wepy from 'wepy';
+import { connect } from 'wepy-redux';
+import store from '@/store/utils';
+import Config from '@/api/config'
+@connect({
+    tabs:store.get('tabs')
+})
+export default class Home extends wepy.component {
+  data = {
+    test: '123',
+    id:''
+  };
+  async getData(id){
+    let res = await Config.newsList(id)
+    console.log(res)
+  }
+  methods = {
+      onChange(e){
+          this.test = e.detail.index
+          this.id = this.tabs[this.test].id
+          // console.log(this.id)
+          // this.getData(this.id)
+          this.$emit('getId',this.id)
+          this.$apply()
+      }
+  }
+  onShow() {
+    console.log(666);
+  }
+}
+</script>
+<style lang="less" scoped>
+.head {
+  width: 100%;
+}
+</style>

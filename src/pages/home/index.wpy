@@ -1,7 +1,10 @@
 <template>
-  <view class="container" @tap="test">
+  <view class="container">
     <view class="forehead">
-      <Home></Home>
+      <Forehead @getId.user="getData"></Forehead>
+    </view>
+    <view class="news">
+      <News :list.sync="list"></News>
     </view>
     <view wx:if="{{0}}" class="mask" @tap.stop="toLogin"></view>
     <van-toast id="van-toast" />
@@ -12,9 +15,13 @@
   import wepy from 'wepy'
   import { connect } from 'wepy-redux'
   import Home from '@/components/common/home'
+  import Forehead from '@/components/common/forehead'
+  import News from '@/components/common/news'
   import Tips from '@/utils/Tips'
+  import Config from '@/api/config'
+  import store from '@/store/utils'
   @connect({
-
+    tabs:store.get('tabs')
   })
 
   export default class Index extends wepy.page {
@@ -22,15 +29,24 @@
       navigationBarTitleText: 'nons',
       "usingComponents": {
         "van-notice-bar": "../../vant-ui/notice-bar/index",
-        "van-toast": "../../vant-ui/toast/index"
+        "van-toast": "../../vant-ui/toast/index",
+        "van-tab": "../../vant-ui/tab/index",
+        "van-tabs": "../../vant-ui/tabs/index"
       }
     }
     components = {
       Home,
+      Forehead,
+      News
+    }
+    data = {
+      list:[]
     }
     methods={
-      test(){
-        console.log(666)
+      async getData(id){
+        let res = await Config.newsList(id)
+        this.list = res.articles
+        this.$apply()
       },
       toLogin(){
         console.log('login')
@@ -40,6 +56,9 @@
     async onLoad() {
       let l = await wepy.login();
       // Tips.loading()
+      let res = await Config.test()
+      store.save('tabs',res.menus.news)
+      this.$apply()
     }
   }
 </script>
@@ -52,6 +71,10 @@
   }
   .forehead{
     width:100%;
+    height:90rpx;
+  }
+  .news{
+    height: calc(100% - 90rpx);
   }
   .userinfo {
     display: flex;

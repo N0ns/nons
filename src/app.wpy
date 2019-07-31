@@ -1,13 +1,12 @@
 <style lang="less">
+@import './static/style/weui.wxss';
+@import './static/style/common.less';
 .container {
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
+
 }
 page{
+  height:100%;
   // background-color: #232423;
 }
 </style>
@@ -15,7 +14,7 @@ page{
 <script>
 import wepy from 'wepy'
 import 'wepy-async-function'
-
+// import '@/static/style/weui.wxss'
 import { setStore } from 'wepy-redux'
 import configStore from './store'
 
@@ -36,7 +35,8 @@ export default class extends wepy.app {
   }
 
   globalData = {
-    userInfo: null
+    userInfo: null,
+    baseUrl:'https://api.dongqiudi.com'
   }
 
   constructor () {

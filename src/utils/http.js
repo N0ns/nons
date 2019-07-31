@@ -26,7 +26,6 @@ export default class http {
         // store.save('loading', false)
         Tips.loaded();
       }
-      
       if (this.isSuccess(res)) {
         _data = !msg ? res.data.data : res.data;
       } else {
